@@ -1,0 +1,130 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Untitled Document</title>
+	<style>
+		img {
+			margin: 10px;
+			cursor: pointer;
+		}
+
+		.bigimg{
+			box-shadow: 0 0 100px rgba(0, 0, 0, 1);
+		}
+
+		.button {
+			width: 80px;
+			border: none;
+		}
+
+		.themebtn {
+			width: 120px;
+			height: 40px;
+			color: black;
+		}
+
+		body{
+			background-color: SkyBlue;
+		}
+	</style>
+</head>
+
+<body>
+
+	<button class="themebtn" onclick="changeTheme()">theme</button>
+
+	<div style="text-align:center; padding-top:30px;">
+		<img src="images/back.jpg" class="button" onclick="changeTumbs(false)" />
+		<img src="images/i1.jpg" name="1" onclick="openImage(this)" />
+		<img src="images/i2.jpg" name="2" onclick="openImage(this)" />
+		<img src="images/i3.jpg" name="3" onclick="openImage(this)" />
+		<img src="images/next.jpg" class="button" onclick="changeTumbs(true)" />
+	</div>
+
+	<div style="text-align:center;">
+		<img src="images/left.png" class="button" onclick="changeBigImg(false)" />
+		<img style="cursor:default;" class="bigimg" src="images/i1_big.jpg" name="big" alt="Фантастические фрукты" />
+		<img src="images/right.png" class="button" onclick="changeBigImg(true)" />
+	</div>
+
+
+	<script>
+		let isDark = false;
+
+		function changeTheme() {
+			let btn = document.querySelector(".themebtn");
+			let bigimg = document.querySelector(".bigimg");
+			if (!isDark) {
+				document.body.style.background = "MidnightBlue";
+				btn.style.color = "white";
+				btn.style.background = "black";
+				bigimg.style.boxShadow = "0px 0px 100px rgba(255, 255, 255, 1)";
+				isDark = true;
+			}
+			else {
+				document.body.style.background = "SkyBlue";
+				btn.style.color = "black";
+				btn.style.background = "white";
+				bigimg.style.boxShadow = "0px 0px 100px rgba(0, 0, 0, 1)";
+				isDark = false;
+			}
+		}
+
+		function changeBigImg(flag) {
+			let bigimg = document.getElementsByName("big")[0];
+			let index = parseInt(bigimg.src.match(/i(\d+)/)[1]);
+
+			if (flag) {
+				if (index == 9) { index = 0; }
+				bigimg.src = `images/i${index + 1}_big.jpg`;
+			}
+			if (!flag) {
+				if (index == 1) { index = 10; }
+				let bigimg = document.getElementsByName("big")[0];
+				bigimg.src = `images/i${index - 1}_big.jpg`;
+			}
+		}
+
+		function openImage(pic) {
+			document.images["big"].src = "images/i" + pic.name + "_big.jpg"
+		}
+
+		function changeTumbs(flag) {
+			if (flag) {
+				if (document.images[3].name == 9) {
+					for (var i = 1; i <= 3; i++) {
+						document.images[i].name = i;
+						document.images[i].src = "images/i" + i + ".jpg";
+					}
+				}
+				else {
+					for (var i = 1; i <= 3; i++) {
+						document.images[i].name = parseInt(document.images[i].name) + 3;
+						document.images[i].src = "images/i" + document.images[i].name + ".jpg";
+					}
+				}
+			}
+			else {
+				if (document.images[1].name == 1) {
+					for (var i = 1; i <= 3; i++) {
+						document.images[i].name = i + 6;
+						document.images[i].src = "images/i" + (i + 6) + ".jpg";
+					}
+				}
+				else {
+					for (var i = 1; i <= 3; i++) {
+						document.images[i].name = parseInt(document.images[i].name) - 3;
+						document.images[i].src = "images/i" + document.images[i].name + ".jpg";
+					}
+				}
+			}
+		}
+
+	</script>
+
+</body>
+
+</html>
